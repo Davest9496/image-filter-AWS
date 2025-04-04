@@ -1,24 +1,94 @@
-# Full Stack Apps on AWS Project
+# Image Processing Microservice on AWS
 
-You have been hired as a software engineer to develop an application that will help the FBI find missing people.  The application will upload images to the FBI cloud database hosted in AWS. This will allow the FBI to run facial recognition software on the images to detect a match. You will be developing a NodeJS server and deploying it on AWS Elastic Beanstalk. 
-You will build upon the application we've developed during the lessons in this course. You'll complete a REST API endpoint in a backend service that processes incoming image URLs.
+## Project Overview
+This project is a Node.js application that runs a simple image processing microservice deployed on AWS Elastic Beanstalk. The application processes image URLs through a REST API endpoint, applying filters (resize, grayscale, quality adjustment) and returning the processed image.
 
-## Getting Started
+## Live Demo
+The application is deployed and accessible at:
+- [Base URL](http://image-filter.eba-7pbts7vi.eu-west-2.elasticbeanstalk.com/)
+- [Test Endpoint](http://image-filter.eba-7pbts7vi.eu-west-2.elasticbeanstalk.com/test)
+- [Image Processing Endpoint](http://image-filter.eba-7pbts7vi.eu-west-2.elasticbeanstalk.com/filteredimage?image_url=https://picsum.photos/200/300)
 
-You can clone this repo to run the project locally, or navigate to the workspace in the Udacity course.
+## Implementation Features
 
-## Project Instructions
+### REST API Endpoints
+- `GET /filteredimage?image_url={{URL}}`: Processes an image from a public URL:
+  1. Validates the image URL
+  2. Downloads and filters the image
+  3. Returns the processed image
+  4. Cleans up temporary files
 
-To complete this project, you will need to:
+### Error Handling
+- 400 Bad Request: When URL is missing or invalid
+- 422 Unprocessable Entity: When image processing fails
+- 500 Internal Server Error: For server-side errors
 
-* Set up node environment
-* Create a new endpoint in the server.js file
-* Deploying your system
+### Security Measures
+- Input validation for URL parameters
+- Content-type verification
+- HTTP/HTTPS protocol validation
 
-## Testing
+## AWS Deployment
 
-Successful URL responses should have a 200 code. Ensure that you include error codes for the scenario that someone uploads something other than an image and for other common errors.
+### AWS Elastic Beanstalk Configuration
+- Environment: Node.js 20
+- Region: eu-west-2 (London)
+- Instance Type: t2.micro
+- Custom configurations for NGINX and file permissions
+
+### Deployment Process
+1. Created application configuration with `.ebextensions`:
+   - Custom NGINX proxy configuration
+   - File permissions for the `/tmp` directory
+   - Error handling and logging
+
+2. Deployment pipeline:
+   - Local development and testing
+   - EB CLI for deployment
+   - Environment variables configuration
+   - Log monitoring and debugging
+
+### Troubleshooting Techniques
+- SSH access for direct server inspection
+- Log analysis and monitoring
+- Network configuration verification
+- Error tracking and resolution
+
+## Local Development
+
+### Prerequisites
+- Node.js v14+
+- NPM or Yarn package manager
+
+### Installation
+1. Clone the repository
+```bash
+git clone <repository-url>
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Run the development server
+```bash
+npm start
+```
+
+The server will be available at http://localhost:8081
+
+### API Usage Example
+```
+GET /filteredimage?image_url=https://picsum.photos/200/300
+```
+
+## Technologies Used
+- Node.js/Express for the backend
+- Jimp for image processing
+- AWS Elastic Beanstalk for deployment
+- NGINX as the web server
+- Environment configuration with .ebextensions
 
 ## License
-
 [License](LICENSE.txt)

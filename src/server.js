@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import fs from "fs";
 import { filterImageFromURL, deleteLocalFiles } from "./util/util.js";
 
-console.log("Server starting - updated version with timestamp: " + Date.now());
 
 // Init the Express application
 const app = express();
@@ -70,7 +69,9 @@ app.get("/test", (req, res) => {
 // Root Endpoint
 // Displays a simple message to the user
 app.get("/", async (req, res) => {
-  res.send("try GET /filteredimage?image_url={{}}");
+  res.send(
+    "try GET /filteredimage?image_url={{}} or copy and paste link - http://image-filter.eba-7pbts7vi.eu-west-2.elasticbeanstalk.com/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg"
+  );
 });
 
 // Start the Server
