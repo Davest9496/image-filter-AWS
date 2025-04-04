@@ -63,7 +63,7 @@ The application is deployed and accessible at:
 ### Installation
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Davest9496/image-filter-AWS.git
 ```
 
 2. Install dependencies
